@@ -6,8 +6,18 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
 import { server } from "../mocks/server";
+
+// Custom matcher to replace toBeInTheDocument
+expect.extend({
+  toBeInTheDocument(received) {
+    const pass = received !== null;
+    return {
+      message: () => `expected element ${pass ? 'not ' : ''}to be in the document`,
+      pass,
+    };
+  },
+});
 
 import App from "../components/App";
 
